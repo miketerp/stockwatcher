@@ -14,6 +14,8 @@ class Main extends Component {
   }
 
   render() {
+    const { state } = this.props;
+
     return (
       <AppNavigator
         state={ state }
@@ -25,7 +27,7 @@ class Main extends Component {
 
 function mapStateToProps(state) {
   return {
-    state: state.todos
+    state: state
   };
 }
 
