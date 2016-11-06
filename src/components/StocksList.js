@@ -4,8 +4,43 @@ import {
   StyleSheet,
   Text,
   View,
-  ListView
+  ListView,
+  TouchableOpacity
 } from 'react-native';
+
+import util from '../utils/filters';
+
+class RenderChangePercentage extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  _renderPercentageBox(val) {
+    var styleTag = {
+      backgroundColor: 'red'
+    };
+
+    if( parseFloat(val) > 0 ) {
+      styleTag.backgroundColor = '#12B741';
+    }
+
+    return (
+      <View style={ styleTag }>
+        <Text style={{ fontSize: 20, color: 'white', textAlign: 'right', paddingRight: 7.5 }}>
+          { val }
+        </Text>
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 2 }}>
+        { this._renderPercentageBox(util.truncatePercent(this.props.item.changeInPercent)) }
+      </View>
+    );
+  }
+}
 
 class List extends Component {
   constructor(props) {
@@ -17,47 +52,51 @@ class List extends Component {
       }).cloneWithRows(this.props.state.quotes.data)
     };
   }
+  _showRanges() {
+    console.log('herp');
+  }
 
   _renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
     return (
-      <View key={`${sectionID}-${rowID}`} style={{ borderWidth: 0.5, borderBottomColor: 'pink' }}></View>
+      <View key={`${sectionID}-${rowID}`}></View>
     );
   }
 
   _renderListItems(item) {
     return (
-      <View style={{ flexDirection: 'column', backgroundColor: '#F5FCFF', padding: 10 }}>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          <View style={{ flex: 2 }}>
-            <Text style={ styles.title }>
-              { item.symbol }
-            </Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 22 }}>
-              { item.closingPrice }
-            </Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text>
-              { item.changeInPercent }
-            </Text>
-            <Text>
-              { item.changeInValue }
-            </Text>
-          </View>
-        </View>
+      <TouchableOpacity activeOpacity={ 0.6 } onPress={() => _this._showRanges()}>
+        <View style={{ paddingTop: 5, paddingBottom: 5, paddingLeft: 15, paddingRight: 15 }}>
+          <View style={{ flexDirection: 'column' }}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 3, borderTopColor: 'grey', borderTopWidth: 0.5 }}>
+                <Text style={{ color: 'black', fontSize: 20, paddingBottom: 15 }}>
+                  { item.symbol }
+                </Text>
+              </View>
 
-        <View style={{ flex: 1 }}>
-          <Text>
-            { item.name }
-          </Text>
+              <View style={{ flex: 2, borderTopColor: 'grey', borderTopWidth: 0.5 }}>
+                <Text style={{ color: 'black', fontSize: 20, textAlign: 'right', paddingRight: 10 }}>
+                  { util.truncatePrice(item.closingPrice) }
+                </Text>
+              </View>
+
+              <RenderChangePercentage item={ item }></RenderChangePercentage>
+            </View>
+
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: 'black' }}>
+                { item.name }
+              </Text>
+            </View>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 
   render() {
+    _this = this;
+
     return (
       <ListView
         dataSource={ this.state.dataSource }
@@ -69,18 +108,6 @@ class List extends Component {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 16,
-    marginBottom: 8
-  },
-  thumbnail: {
-    width: 53,
-    height: 81,
-  },
-  listView: {
-    paddingTop: 20,
-    backgroundColor: '#F5FCFF',
-  },
 });
 
 export default List;
