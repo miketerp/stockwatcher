@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import {
   Text,
   View,
+  StyleSheet
 } from 'react-native';
 
 class MarketData extends Component {
@@ -31,12 +32,12 @@ class MarketData extends Component {
       }
 
       return (
-        <View key={ key } style={{ flex: 1, padding: 10 }}>
+        <View key={ key } style={ styles.marketCells }>
           <View style={ styleTag }>
-            <Text style={{ fontSize: 18, color: 'black', textAlign: 'center' }}>
+            <Text style={ styles.marketFontStandard }>
               { val.Symbol }
             </Text>
-            <Text style={{ fontSize: 18, color: 'black', textAlign: 'center' }}>
+            <Text style={ styles.marketFontStandard }>
               { val.PreviousClose }
             </Text>
             <Text style={ fontTag }>
@@ -55,11 +56,27 @@ class MarketData extends Component {
     } = this.props;
 
     return (
-      <View style={{ flexDirection: 'row', padding: 10 }}>
+      <View style={ styles.marketMain }>
         { this._renderMarketValues(state.market.data) }
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  marketCells: {
+    flex: 1,
+    padding: 10
+  },
+  marketFontStandard: {
+    fontSize: 18,
+    color: 'black',
+    textAlign: 'center'
+  },
+  marketMain: {
+    flexDirection: 'row',
+    padding: 10
+  }
+});
 
 export default MarketData;

@@ -26,7 +26,7 @@ class RenderChangePercentage extends Component {
 
     return (
       <View style={ styleTag }>
-        <Text style={{ fontSize: 20, color: 'white', textAlign: 'right', paddingRight: 7.5 }}>
+        <Text style={ styles.percentageBox }>
           { val }
         </Text>
       </View>
@@ -54,34 +54,38 @@ class List extends Component {
   }
 
   _showRanges() {
-    console.log('herp');
+    // TODO: will very soon add dayRanges and yearRanges with graph.
+    //console.log('herp & derp');
+    return;
   }
 
-  _renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
-    return (
-      <View key={`${sectionID}-${rowID}`}></View>
-    );
-  }
+  //_renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
+  //  return (
+  //    <View key={`${sectionID}-${rowID}`}></View>
+  //  );
+  //}
 
   _renderListItems(item) {
     return (
       <TouchableOpacity activeOpacity={ 0.6 } onPress={() => _this._showRanges()}>
-        <View style={{ paddingTop: 5, paddingBottom: 5, paddingLeft: 15, paddingRight: 15 }}>
+        <View style={ styles.tickerParentBox }>
           <View style={{ flexDirection: 'column' }}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ flex: 3, borderTopColor: 'grey', borderTopWidth: 0.5 }}>
-                <Text style={{ color: 'black', fontSize: 20, paddingBottom: 15 }}>
+              <View style={ styles.tickerSymbolContainer }>
+                <Text style={ styles.tickerSymbolTextStyle }>
                   { item.symbol }
                 </Text>
               </View>
 
-              <View style={{ flex: 2, borderTopColor: 'grey', borderTopWidth: 0.5 }}>
-                <Text style={{ color: 'black', fontSize: 20, textAlign: 'right', paddingRight: 10 }}>
+              <View style={ styles.tickerPriceContainer }>
+                <Text style={ styles.tickerPriceTextStyle }>
                   { util.truncatePrice(item.closingPrice) }
                 </Text>
               </View>
 
-              <RenderChangePercentage item={ item }></RenderChangePercentage>
+              <RenderChangePercentage
+                item={ item }
+              />
             </View>
 
             <View style={{ flex: 1 }}>
@@ -109,6 +113,39 @@ class List extends Component {
 }
 
 const styles = StyleSheet.create({
+  tickerParentBox: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 15,
+    paddingRight: 15
+  },
+  tickerSymbolContainer: {
+    flex: 3,
+    borderTopColor: 'grey',
+    borderTopWidth: 0.5
+  },
+  tickerSymbolTextStyle: {
+    color: 'black',
+    fontSize: 20,
+    paddingBottom: 15
+  },
+  tickerPriceContainer: {
+    flex: 2,
+    borderTopColor: 'grey',
+    borderTopWidth: 0.5
+  },
+  tickerPriceTextStyle: {
+    color: 'black',
+    fontSize: 20,
+    textAlign: 'right',
+    paddingRight: 10
+  },
+  percentageBox: {
+    fontSize: 20,
+    color: 'white',
+    textAlign: 'right',
+    paddingRight: 7.5
+  }
 });
 
 export default List;

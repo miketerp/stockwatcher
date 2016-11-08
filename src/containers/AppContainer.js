@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import {
-  Text,
   View,
 } from 'react-native';
 

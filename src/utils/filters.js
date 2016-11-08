@@ -1,11 +1,11 @@
 var filters = {
   truncatePrice: function(val) {
-    // In most cases not needed but incase of berkshire hathaway, the most expensive stock.
+    // TODO: Incase of berkshire hathaway, aka. the most expensive stock, find a new way.
     if( val.length > 7 ) {
       val = val.split('.')[0];
     }
 
-    return parseFloat(val).toLocaleString();
+    return new Number(parseFloat(val)).toFixed(2).toLocaleString();
   },
   truncatePercent: function(val) {
     // This is needed because sometimes Yahoo returns with more than 2 digits on cents.
