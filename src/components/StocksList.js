@@ -52,6 +52,7 @@ class List extends Component {
       }).cloneWithRows(this.props.state.quotes.data)
     };
   }
+
   _showRanges() {
     console.log('herp');
   }

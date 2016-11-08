@@ -1,40 +1,29 @@
-export const increment = (id) => {
+import fetch from 'isomorphic-fetch';
+
+function sendFetchQuotesRequest() {
   return {
-    type: 'INCREMENT',
-    payload: {
-      id
-    }
-  }
+    type: 'FETCHING',
+    status: 'busy'
+  };
 }
 
-//this action tell the reducer which counter with specified id needs to be
-//decremented.
-export const decrement = (id) => {
+function receiveFetchQuotesRequest(json) {
   return {
-    type: 'DECREMENT',
-    payload: {
-      id
-    }
-  }
+    type: 'RECEIVING',
+    status: 'free',
+    data: json.data,
+    timestamp: Date.now()
+  };
 }
 
-//tells the reducer, we need a new counter on the scene with a new ID
-export const newCounter = () => {
-  return {
-    type: 'ADD_NEW_COUNTER'
-  }
-}
+export const fetchQuotes = () => {
+  return function (dispatch) {
+    dispatch(sendFetchQuotesRequest());
 
-
-export const incrementWithDelay = (id) => {
-  return (dispatch, getState) => {
-    setTimeout(() => {
-      dispatch({
-        type: 'INCREMENT',
-        payload: {
-          id
-        }
-      })
-    }, 1000)
+    return fetch('http://sanghokeem.com/api/stocks')
+      .then(res => res.json())
+      .then(json => {
+        dispatch(receiveFetchQuotesRequest(json));
+      });
   }
 }

@@ -1,14 +1,18 @@
-import quotes from './sample.json';
-
-const initialState = quotes;
-
-function todos(state = initialState, action) {
+function quotes(state = {}, action) {
   switch (action.type) {
-    case 'ADD_TODO':
-      return state.concat([ action.text ]);
+    case 'FETCHING':
+      return Object.assign({}, state, {
+        'status': action.status
+      });
+    case 'RECEIVING':
+      return Object.assign({}, state, {
+        'status': action.status,
+        'data': action.data,
+        'time': action.timestamp
+      });
     default:
       return state;
   }
 }
 
-export default todos;
+export default quotes;

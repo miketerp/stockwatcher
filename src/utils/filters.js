@@ -8,10 +8,10 @@ var filters = {
     return parseFloat(val).toLocaleString();
   },
   truncatePercent: function(val) {
-    // This is needed because sometimes Yahoo returns with more than 2 digits
+    // This is needed because sometimes Yahoo returns with more than 2 digits on cents.
     val = parseFloat(val);
 
-    if (val > 0 ) {
+    if ( val > 0 ) {
       val = '+' + val.toFixed(2);
     } else {
       val = val.toFixed(2);

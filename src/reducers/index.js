@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
 import quotes from './quotes';
-//import counter from './counter';
+import market from './market';
 
 export default combineReducers({
   quotes,
-  //counter
+  market
 });

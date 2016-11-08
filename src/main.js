@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-
 import { bindActionCreators } from 'redux';
-
 import { connect } from 'react-redux';
 
 import * as actions from './actions/actions'
 
 import AppNavigator from './AppNavigator';
+import LoadingScreen from './components/loadingScreen';
 
 class Main extends Component {
   constructor(props) {
@@ -14,6 +13,14 @@ class Main extends Component {
   }
 
   render() {
+    if (this.props.state.quotes.status === 'busy') {
+      return (
+        <LoadingScreen
+          text="loading ..."
+        />
+      );
+    }
+
     const { state } = this.props;
 
     return (
@@ -25,7 +32,7 @@ class Main extends Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state, ownProps) => {
   return {
     state: state
   };
